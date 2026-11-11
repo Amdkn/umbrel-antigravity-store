@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   app_proxy:
     environment:
@@ -11,12 +9,21 @@ services:
   #   agy remote-control start --name umbrel
   # No --dangerously-skip-permissions on purpose: tool approvals stay
   # under your control from the Antigravity web console.
+  #
+  # Volumes: NEVER mount over /home/agent itself — the image's agy binary
+  # lives at /home/agent/.local/bin/agy, and a bind mount over /home/agent
+  # hides it (that broke the first install: "agy: executable file not
+  # found in $PATH"). Only empty-or-absent subdirectories are mounted, so
+  # the binary stays visible and auth + work persist across restarts.
   agent:
     image: docker.io/sbx/antigravity:1.0.0@sha256:a2a43d7ba267b769e78687b9f911bad16da08ec7efd77b2ccd5f45179f7055fc
     restart: on-failure
     command: ["remote-control", "start", "--name", "umbrel"]
     volumes:
-      - ${APP_DATA_DIR}/data:/home/agent
+      - ${APP_DATA_DIR}/config:/home/agent/.config
+      - ${APP_DATA_DIR}/share:/home/agent/.local/share
+      - ${APP_DATA_DIR}/state:/home/agent/.local/state
+      - ${APP_DATA_DIR}/workspace:/home/agent/workspace
     environment:
       HOME: /home/agent
 

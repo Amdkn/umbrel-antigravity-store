@@ -32,7 +32,7 @@ l'appli et survit aux redémarrages.
 - Commande : `agy remote-control start --name umbrel`.
 - Pas de `--dangerously-skip-permissions` : les approbations d'outils restent sous
   ton contrôle depuis la console web Antigravity.
-- Données persistantes : `/home/agent` (autorisation, configuration, espace de travail).
+- Données persistantes : `.config`, `.local/share`, `.local/state` et `workspace` sous `/home/agent` (autorisation, configuration, espace de travail). Le dossier `/home/agent` lui-même n'est JAMAIS monté : le binaire `agy` vit dans l'image à `/home/agent/.local/bin/agy`, et un montage par-dessus le cacherait (premier install échoué : « agy: executable file not found in $PATH »).
 - Page d'état : petit serveur statique sur le port 8080 (tuile Umbrel).
 
 ## Vérifications faites à l'empaquetage
