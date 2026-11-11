@@ -1,0 +1,30 @@
+manifestVersion: 1
+id: antigravity
+storage:
+  dataRoot: data
+category: developer
+name: Antigravity
+version: "1.0.0"
+tagline: Run the Antigravity agent on your Umbrel, drive it from your browser
+description: >-
+  Runs the Antigravity agent (agy) in remote-control mode on your Umbrel, using
+  Google's official agent image. You drive the agent from antigravity.google.com
+  by picking the machine named "umbrel" — no need to keep your PC on.
+
+  First run: authorize the agent with your Google account. The authorization link
+  is shown in the app logs (Umbrel dashboard → Antigravity → logs). The
+  authorization is then stored in the app data and survives restarts.
+releaseNotes: >-
+  First release: Antigravity agent 1.0.0 (official image docker.io/sbx/antigravity:1.0.0,
+  pinned by digest) in remote-control mode, with a status page.
+developer: Google
+website: https://antigravity.google/
+dependencies: []
+repo: https://antigravity.google/
+support: https://antigravity.google/
+port: 8080
+path: ""
+defaultUsername: ""
+deterministicPassword: false
+torOnly: false
+icon: https://raw.githubusercontent.com/Amdkn/umbrel-antigravity-store/main/antigravity/icon.svg

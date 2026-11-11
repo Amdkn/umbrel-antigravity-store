@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: antigravity_status_1
+      APP_PORT: 8080
+
+  # Antigravity agent (agy) in remote-control mode.
+  # Image entrypoint is already `agy`, so this command runs:
+  #   agy remote-control start --name umbrel
+  # No --dangerously-skip-permissions on purpose: tool approvals stay
+  # under your control from the Antigravity web console.
+  agent:
+    image: docker.io/sbx/antigravity:1.0.0@sha256:a2a43d7ba267b769e78687b9f911bad16da08ec7efd77b2ccd5f45179f7055fc
+    restart: on-failure
+    command: ["remote-control", "start", "--name", "umbrel"]
+    volumes:
+      - ${APP_DATA_DIR}/data:/home/agent
+    environment:
+      HOME: /home/agent
+
+  # Static status page: the agent is headless (no local web UI), so the
+  # Umbrel tile opens this page explaining where to drive it from.
+  status:
+    image: python:3-alpine
+    restart: on-failure
+    command: ["sh", "-c", "mkdir -p /www && echo PCFkb2N0eXBlIGh0bWw+CjxodG1sIGxhbmc9ImVuIj4KPGhlYWQ+PG1ldGEgY2hhcnNldD0idXRmLTgiPjx0aXRsZT5BbnRpZ3Jhdml0eSBvbiBVbWJyZWw8L3RpdGxlPjwvaGVhZD4KPGJvZHkgc3R5bGU9ImZvbnQtZmFtaWx5OnNhbnMtc2VyaWY7bWF4LXdpZHRoOjY0MHB4O21hcmdpbjo0MHB4IGF1dG87cGFkZGluZzowIDE2cHgiPgo8aDE+QW50aWdyYXZpdHk8L2gxPgo8cD5UaGUgQW50aWdyYXZpdHkgYWdlbnQgcnVucyBvbiB0aGlzIFVtYnJlbCBpbiByZW1vdGUgY29udHJvbCBtb2RlLjwvcD4KPHA+RHJpdmUgaXQgZnJvbSA8YSBocmVmPSJodHRwczovL2FudGlncmF2aXR5Lmdvb2dsZS5jb20vIj5hbnRpZ3Jhdml0eS5nb29nbGUuY29tPC9hPiAocGljayB0aGUgbWFjaGluZSBuYW1lZCAidW1icmVsIikuPC9wPgo8cD5GaXJzdCBydW46IGF1dGhvcml6ZSB0aGUgYWdlbnQgd2l0aCB5b3VyIEdvb2dsZSBhY2NvdW50LiBUaGUgYXV0aG9yaXphdGlvbiBsaW5rIGlzIHNob3duIGluIHRoZSBhcHAgbG9ncyAoVW1icmVsIGRhc2hib2FyZCwgQW50aWdyYXZpdHksIGxvZ3MpLjwvcD4KPC9ib2R5Pgo8L2h0bWw+Cg== | base64 -d > /www/index.html && python -m http.server 8080 --directory /www"]
