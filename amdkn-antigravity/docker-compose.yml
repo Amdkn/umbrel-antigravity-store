@@ -3,7 +3,7 @@ version: "3.7"
 services:
   app_proxy:
     environment:
-      APP_HOST: antigravity_status_1
+      APP_HOST: amdkn-antigravity_status_1
       APP_PORT: 8080
 
   # Antigravity agent (agy) in remote-control mode.

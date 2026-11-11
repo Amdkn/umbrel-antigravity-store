@@ -1,5 +1,5 @@
 manifestVersion: 1
-id: antigravity
+id: amdkn-antigravity
 storage:
   dataRoot: data
 category: developer
@@ -27,4 +27,4 @@ path: ""
 defaultUsername: ""
 deterministicPassword: false
 torOnly: false
-icon: https://raw.githubusercontent.com/Amdkn/umbrel-antigravity-store/main/antigravity/icon.svg
+icon: https://raw.githubusercontent.com/Amdkn/umbrel-antigravity-store/main/amdkn-antigravity/icon.svg
